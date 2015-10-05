@@ -11,3 +11,5 @@ class DefaultController extends Controller
         return $this->render('ArticleBundle:Default:index.html.twig', array('name' => $name));
     }
 }
+
+
