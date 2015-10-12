@@ -1,3 +1,23 @@
-article_homepage:
-    path:    /hello
-    defaults: { _controller: ArticleBundle:Article:index }
+article_home:
+    path:        /{page}
+    defaults:    { _controller: ArticleBundle:Article:index, page: 1 }
+    
+article_view:
+    path:        /blog/article/{id}
+    defaults:    { _controller: ArticleBundle:Article:view }
+    
+article_add:
+    path:        /blog/add
+    defaults:    { _controller: ArticleBundle:Article:add }
+    
+article_modifie:
+    path:        /blog/modifie
+    defaults:    { _controller: ArticleBundle:Article:modifie }
+
+article_del:
+    path:        /blog/del
+    defaults:    { _controller: ArticleBundle:Article:del }
+    
+article_view_all:
+    path:        /blog/articles
+    defaults:    { _controller: ArticleBundle:Article:view_all }

@@ -1,4 +1,6 @@
+# app/config/routing.yml
+
 article:
     resource: "@ArticleBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /blog
 
