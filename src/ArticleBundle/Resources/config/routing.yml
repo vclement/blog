@@ -1,23 +1,31 @@
 article_home:
     path:        /{page}
     defaults:    { _controller: ArticleBundle:Article:index, page: 1 }
+    requirements:
+        id: \d*
     
-article_view:
-    path:        /blog/article/{id}
-    defaults:    { _controller: ArticleBundle:Article:view }
+article_voir:
+    path:        /article/{id}
+    defaults:    { _controller: ArticleBundle:Article:voir }
+    requirements:
+        id: \d+
     
-article_add:
-    path:        /blog/add
-    defaults:    { _controller: ArticleBundle:Article:add }
+article_ajout:
+    path:        /add
+    defaults:    { _controller: ArticleBundle:Article:ajout }
     
 article_modifie:
-    path:        /blog/modifie
+    path:        /modifie/{id}
     defaults:    { _controller: ArticleBundle:Article:modifie }
+    requirements:
+        id: \d+
 
-article_del:
-    path:        /blog/del
-    defaults:    { _controller: ArticleBundle:Article:del }
+article_supprime:
+    path:        /del
+    defaults:    { _controller: ArticleBundle:Article:supprime }
+    requirements:
+        id: \d+
     
 article_view_all:
-    path:        /blog/articles
+    path:        /articles
     defaults:    { _controller: ArticleBundle:Article:view_all }

@@ -8,60 +8,84 @@ namespace ArticleBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 class ArticleController extends Controller
 {
 
-    public function indexAction()
-
-    {
-    	//Pour faire un hello world decommenter la ligne ci-dessous.
-		//return new Response("Hello World !");
-		
-		
-    	$content = $this
-    		->get('templating')
-    		->render('ArticleBundle:ArticleBlog:index.html.twig', array('nom' => 'Toto'));
-    	return new Response($content);
-	}
+	// C'est la fonction qui renvoie la première page du site. 
+	//C'est la page d'accueil, 
+	//mais c'est aussi la page qui permet de voir tout les articles.
+	
+    public function indexAction($page){
+    	//Maintenant on va commencer la page d'accueil du blog.
+    	
+    	//Si la page est inférieur à 1, il y a une erreur
+    	if($page < 1){
+    		// On déclenche l'exeption et on ouvre une page personnalisé d'erreur 404
+    		throw new NotFoundHttpException('Page "'.$page.'" innexistante.');
+    	}
+    	
+    	// Puis on récupèrera tout les articles de blog qui sont déjà crée
+    	
+    	// Mais pour le moment on va simplement utiliser le template
+    	return $this->render('ArticleBundle:ArticleBlog:index.html.twig');
+    }
 	
 		
 	// La route fait appel à ArticleBundle:ArticleBlog:view,
 	// on doit donc définir la méthode viewAction.
-	// On donne à cette méthode l'argument $id, pour
-	// correspondre au paramètre {id} de la route
-	public function viewAction($id)
-	{
-		// $id vaut 5 si l'on a appelé l'URL /platform/advert/5
-
-		// Ici, on récupèrera depuis la base de données
-		// l'annonce correspondant à l'id $id.
-		// Puis on passera l'annonce à la vue pour
-		// qu'elle puisse l'afficher
-
-		return new Response("Affichage de l'annonce d'id : ".$id);
+	// Cette méthode nous permet de voir un article en particulier.
+	public function voirAction($id){
+		// On récupère chaque article grâce à son id.
+		
+		return $this->render('ArticleBundle:ArticleBlog:voir.html.twig', array('id' => $id));
 	}
 
-		// ... et la méthode indexAction que nous avons déjà créée
+
+		// La méthode addAction, va permettre l'ajout d'un article sur notre site de blog.		
+	public function ajoutAction(Request $request){
 		
-	public function addAction(){
-		// Cette fonction permet l'ajout d'un article sur le blog
+		// C'est ici que l'on gère l'ajout du formulaire.
+		$session = $request->getSession();
 		
-		return new Response("Ici se trouve la fonction pour ajouter un article dans le blog.");
-	
+		//On vérifie que l'utilisateur a bien utilisé la méthode POST
+    	if('POST' == $request->getMethod()){
+			//Ici on a l'interface de création de l'article puis après l'envoie, on affiche l'article qui vient d'être crée.
+			$request->getSession()->getFlashBag()->add('notice', 'Article créé.');
+			
+			//Puis on va redirige vers l'article.
+			return $this->redirect($this->generateUrl('blog_voir', array('id' => 5)));		
+		}
+		
+		// En cas d'absence de méthode POST on redirige vers le formulaire.
+		return $this->render('ArticleBundle:ArticleBlog:ajout.html.twig');
 	}
 	
+	
+	// La fonction suivante va modifier un article qui a déjà été crée.
 	public function modifieAction(){
-		// Cette fonction permet la modification d'un article sur le blog
+		// D'abord on récupère l'id de l'article à modifier.
 		
-		return new Response("Ici se trouve la fonction pour modifier un article de blog");
+		// Puis une fois modifier, on envoie les modifications.
+		if('POST' == $request->getMethod()){
+			$request->getSession()->getFlashBag()->add('notice', 'Article modifié.');
+			return $this->redirect($this->generateUrl('blog_voir', array('id' => 5)));
+		}
+		
+		return $this->render('ArticleBundle:ArticleBlog:modifie.html.twig');
 	}
     
-    public function delAction(){
-    	// Cette fonction permet de modifier un article qui a déjà été créée
+    
+    // Cette fonction permet de supprimer un article qui a déjà été créée
+    public function supprimeAction(){
+    	// Tout d'abord, il faudra récupérer l'id de l'article.
     	
-    	return new Response("Ici se trouve la fonction pour supprimer un article");
+    	// Ensuite, on gère la suppression de la base de donnée.
+    	
+    	return $this->render('ArticleBundle:ArticleBlog:supprime.html.twig');    	
     }
    
 }
