@@ -30,8 +30,31 @@ class ArticleController extends Controller
     	
     	// Puis on récupèrera tout les articles de blog qui sont déjà crée
     	
+    	// Notre liste d'annonce en dur
+		$listArticles = array(
+		  array(
+			'title'   => 'Recherche développpeur Symfony2',
+			'id'      => 1,
+			'author'  => 'Alexandre',
+			'content' => 'Nous recherchons un développeur Symfony2 débutant sur Lyon. Blabla…',
+			'date'    => new \Datetime()),
+		  array(
+			'title'   => 'Mission de webmaster',
+			'id'      => 2,
+			'author'  => 'Hugo',
+			'content' => 'Nous recherchons un webmaster capable de maintenir notre site internet. Blabla…',
+			'date'    => new \Datetime()),
+		  array(
+			'title'   => 'Offre de stage webdesigner',
+			'id'      => 3,
+			'author'  => 'Mathieu',
+			'content' => 'Nous proposons un poste pour webdesigner. Blabla…',
+			'date'    => new \Datetime())
+		);
+    	
     	// Mais pour le moment on va simplement utiliser le template
-    	return $this->render('ArticleBundle:ArticleBlog:index.html.twig');
+    	return $this->render('ArticleBundle:ArticleBlog:index.html.twig', array('listArticles' => $listArticles
+    	));
     }
 	
 		
@@ -41,7 +64,9 @@ class ArticleController extends Controller
 	public function voirAction($id){
 		// On récupère chaque article grâce à son id.
 		
-		return $this->render('ArticleBundle:ArticleBlog:voir.html.twig', array('id' => $id));
+		return $this->render('ArticleBundle:ArticleBlog:index.html.twig', array(
+  'listArticles' => array()
+));
 	}
 
 
@@ -87,6 +112,22 @@ class ArticleController extends Controller
     	
     	return $this->render('ArticleBundle:ArticleBlog:supprime.html.twig');    	
     }
+    
+    public function menuAction($limit)
+	{
+	// On fixe en dur une liste ici, bien entendu par la suite
+	// on la récupérera depuis la BDD !
+	 $listArticles = array(
+      array('id' => 2, 'title' => 'Recherche développeur Symfony2'),
+      array('id' => 5, 'title' => 'Mission de webmaster'),
+      array('id' => 9, 'title' => 'Offre de stage webdesigner')
+    );
+
+	return $this->render('ArticleBundle:ArticleBlog:menu.html.twig', array(
+	  // Tout l'intérêt est ici : le contrôleur passe les variables nécessaires au template !
+	  'listArticles' => $listArticles
+	));
+	}
    
 }
 

@@ -1,0 +1,14 @@
+{% extends "ArticleBundle::design.html.twig" %}
+
+{% block body %}
+
+  <h2>Ajouter un article</h2>
+
+  {{ include("ArticleBundle:ArticleBlog:formulaire.html.twig") }}
+
+  <p>
+    Attention : cet article sera ajoutée directement
+    sur la page d'accueil après validation du formulaire.
+  </p>
+
+{% endblock %}

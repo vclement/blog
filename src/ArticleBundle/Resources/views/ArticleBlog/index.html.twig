@@ -1,36 +1,26 @@
-{# src/ArticleBundle/Resources/views/ArticleBlog/index.html.twig #}
 
-<!-- code de base
+{% extends "ArticleBundle::design.html.twig" %}
 
- -->
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
 
-<!DOCTYPE html>
+{% block blog_body %}
 
-<html>
+  <h2>Liste des articles</h2>
 
-    <head>
+  <ul>
+    {% for article in listArticles %}
+      <li>
+        <a href="{{ path('article_voir', {'id': article.id}) }}">
+          {{ article.title }}
+        </a>
+        par {{ article.author }},
+        le {{ article.date|date('d/m/Y') }}
+      </li>
+    {% else %}
+      <li>Pas (encore !) d'articles</li>
+    {% endfor %}
+  </ul>
 
-        <title>Bienvenue sur ma première page de the blog !</title>
-
-    </head>
-
-    <body>
-
-        <h1>Hello and welcome to the blog ! Ton nom est {{ nom }} </h1>
-
-
-        <p>
-
-            Le Hello World est un grand classique en programmation.
-
-            Il signifie énormément, car cela veut dire que vous avez
-
-            réussi à exécuter le programme pour accomplir une tâche simple :
-
-            afficher ce hello world !
-
-        </p>
-
-    </body>
-
-</html>
+{% endblock %}
