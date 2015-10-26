@@ -118,9 +118,9 @@ class ArticleController extends Controller
 	// On fixe en dur une liste ici, bien entendu par la suite
 	// on la récupérera depuis la BDD !
 	 $listArticles = array(
-      array('id' => 2, 'title' => 'Recherche développeur Symfony2'),
-      array('id' => 5, 'title' => 'Mission de webmaster'),
-      array('id' => 9, 'title' => 'Offre de stage webdesigner')
+      array('id' => 2, 'title' => 'Ouverture du blog'),
+      array('id' => 5, 'title' => 'Mon premier article'),
+      array('id' => 9, 'title' => 'Ce qui va suive dans ce blog')
     );
 
 	return $this->render('ArticleBundle:ArticleBlog:menu.html.twig', array(
