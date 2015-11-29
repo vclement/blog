@@ -1,9 +1,4 @@
-article_home:
-    path:        /{page}
-    defaults:    { _controller: ArticleBundle:Article:index, page: 1 }
-    requirements:
-        id: \d*
-    
+      
 article_voir:
     path:        /article/{id}
     defaults:    { _controller: ArticleBundle:Article:voir }
@@ -11,7 +6,7 @@ article_voir:
         id: \d+
     
 article_ajout:
-    path:        /add
+    path:        /ajout
     defaults:    { _controller: ArticleBundle:Article:ajout }
     
 article_modifie:
@@ -25,7 +20,14 @@ article_supprime:
     defaults:    { _controller: ArticleBundle:Article:supprime }
     requirements:
         id: \d+
+
     
 article_view_all:
     path:        /articles
     defaults:    { _controller: ArticleBundle:Article:view_all }
+    
+article_home:
+    path:        /{page}
+    defaults:    { _controller: ArticleBundle:Article:index, page: 1 }
+    requirements:
+        id: \d*

@@ -1,0 +1,25 @@
+{% extends "ArticleBundle::design.html.twig" %}
+
+{% block title %}
+  Modifier un article - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h2>Modifier un article</h2>
+
+  {{ include("ArticleBundle:ArticleBlog:formulaire.html.twig") }}
+
+  <p>
+    Vous éditez un article déjà existante, merci de ne pas changer
+    l'esprit générale de l'article déjà publié.
+  </p>
+
+  <p>
+    <a href="{{ path('article_voir', {'id': article.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à l'article
+    </a>
+  </p>
+
+{% endblock %}

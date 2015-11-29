@@ -5,22 +5,21 @@
   Accueil - {{ parent() }}
 {% endblock %}
 
-{% block blog_body %}
+{% block body %}
 
   <h2>Liste des articles</h2>
 
-  <ul>
-    {% for article in listArticles %}
-      <li>
-        <a href="{{ path('article_voir', {'id': article.id}) }}">
-          {{ article.title }}
-        </a>
-        par {{ article.author }},
-        le {{ article.date|date('d/m/Y') }}
-      </li>
-    {% else %}
-      <li>Pas (encore !) d'articles</li>
-    {% endfor %}
+    	{% for article in listArticles %}
+  			{% block article %}
+			<a href="{{ path('article_voir', {'id': article.id}) }}">
+		  	{{ article.title }}
+			</a>
+			</br> {{article.content }} </br/t>
+			par {{ article.author }},
+			le {{ article.date|date('d/m/Y') }}
+			</br></br>
+			{% endblock %}
+		{% endfor %}
   </ul>
 
 {% endblock %}

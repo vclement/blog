@@ -20,7 +20,7 @@
       <h1>Mon Blog personnel</h1>
       <p>
         Ce projet est propulsé par Symfony2,
-        et construit grâce au MOOC OpenClassrooms et SensioLabs ainsi que le profeeseur Arnaud Castellane de l'esiea.
+        et construit grâce au MOOC OpenClassrooms et SensioLabs ainsi que le professeur Arnaud Castellane de l'esiea.
       </p>
       <p>
        Participer au blog....
@@ -40,6 +40,7 @@
       </div>
       <div id="content" class="col-md-9">
         {% block body %}
+        
         {% endblock %}
       </div>
     </div>
@@ -47,7 +48,7 @@
     <hr>
 
     <footer>
-      <p>The sky's the limit © {{ 'now'|date('Y') }} and beyond.</p>
+      <p>Le copyright est dépassé depuis {{ 'now'|date('M Y') }}.</p>
     </footer>
   </div>
 
