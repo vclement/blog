@@ -10,4 +10,20 @@ namespace ArticleBundle\Entity;
  */
 class ArticleRepository extends \Doctrine\ORM\EntityRepository
 {
-}
+
+	public function getAdverts()
+	{
+	$query = $this->createQueryBuilder('a')
+	  // Jointure sur l'attribut image
+	  ->leftJoin('a.image', 'i')
+	  ->addSelect('i')
+	  ->addSelect('c')
+	  ->orderBy('a.date', 'DESC')
+	  ->getQuery()
+	;
+
+	return $query->getResult();
+	}
+
+
+	}

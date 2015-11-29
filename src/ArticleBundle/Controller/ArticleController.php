@@ -115,14 +115,39 @@ class ArticleController extends Controller
     
     
     // Cette fonction permet de supprimer un article qui a déjà été créée
-    public function supprimeAction(Request $request){
-    	// Tout d'abord, il faudra récupérer l'id de l'article.
-    	$article = new Article();
-    	
-    	$article->getId();
-    	// Ensuite, on gère la suppression de la base de donnée.
-    	
-    	return $this->render('ArticleBundle:ArticleBlog:supprime.html.twig');    	
+    public function supprimeAction($id=NULL, Request $request){
+
+		// On récupère l'EntityManager
+		$em = $this->getDoctrine()->getManager();
+
+		// On récupère l'entité correspondant à l'id $id
+		$article = $em->getRepository('ArticleBundle:Article')->find($id);
+
+		// Si l'annonce n'existe pas, on affiche une erreur 404
+		if ($article == null) {
+		  throw $this->createNotFoundException("L'article d'id ".$id." n'existe pas.");
+		}
+
+		// On crée un formulaire vide, qui ne contiendra que le champ CSRF
+    // Cela permet de protéger la suppression d'annonce contre cette faille
+    $form = $this->createFormBuilder()->getForm();
+
+    if ($form->handleRequest($request)->isValid()) {
+      $em->remove($article);
+      $em->flush();
+
+      $request->getSession()->getFlashBag()->add('info', "L'article a bien été supprimée.");
+
+		// Si la requête est en GET, on affiche une page de confirmation avant de delete
+		return $this->redirect($this->generateUrl('article_home'));
+    }
+
+	// Si la requête est en GET, on affiche une page de confirmation avant de supprimer
+	return $this->render('ArticleBundle:ArticleBlog:supprime.html.twig', array(
+	  'article' => $article,
+	  'form'   => $form->createView()
+	));
+      	
     }
     
     public function menuAction($limit = 3)
